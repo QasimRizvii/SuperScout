@@ -833,14 +833,6 @@ SuperScout is currently under active development.
 
 Suggestions, improvements, and technical contributions are welcome as the platform evolves.
 
----
-
-# 📜 License
-
-This project is intended for educational, research, and portfolio purposes unless otherwise specified.
-
----
-
 <div align="center">
 
 ## 🏏 SuperScout
