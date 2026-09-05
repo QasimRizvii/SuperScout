@@ -1,0 +1,3 @@
+"""
+SuperScout Backend — Database Package
+"""

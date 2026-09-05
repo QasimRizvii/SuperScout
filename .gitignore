@@ -1,0 +1,64 @@
+# ── Environment ───────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+.env.staging
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# ── Node / Next.js ────────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+.npm
+*.tsbuildinfo
+next-env.d.ts
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# Docker volumes are not tracked, but compose overrides may be git-ignored
+# if they contain local dev config.
+docker-compose.override.yml
+
+# ── IDE / Editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── ML / Data ─────────────────────────────────────────────────────────────────
+*.pkl
+*.joblib
+*.h5
+*.onnx
+data/raw/
+data/processed/
+ml/models/trained/
+ml/.ipynb_checkpoints/
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/

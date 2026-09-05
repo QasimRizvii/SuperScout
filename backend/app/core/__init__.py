@@ -1,0 +1,3 @@
+"""
+SuperScout Backend — Core Package
+"""
