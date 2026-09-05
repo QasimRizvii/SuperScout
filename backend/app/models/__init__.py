@@ -1,8 +1,39 @@
 """
-SuperScout Backend — Models Package
+SuperScout Backend — SQLAlchemy ORM Models Package
 
-SQLAlchemy ORM models.
-Phase 2 (Cricket Data Architecture) will add cricket domain models here.
-All models must import Base from app.db.base.
+Exposes all Phase 2 domain entities for easy import across services and migrations.
 """
-from app.db.base import Base  # noqa: F401 — re-export for Alembic env.py
+from app.models.enums import (
+    PlayerRole,
+    MatchType,
+    AuctionType,
+    AuctionStatus,
+    DismissalType,
+)
+from app.models.player import Player
+from app.models.team import Team
+from app.models.venue import Venue
+from app.models.match import Match
+from app.models.innings import Innings
+from app.models.batting import BattingPerformance
+from app.models.bowling import BowlingPerformance
+from app.models.matchup import PlayerMatchup
+from app.models.auction import Auction, AuctionTransaction
+
+__all__ = [
+    "PlayerRole",
+    "MatchType",
+    "AuctionType",
+    "AuctionStatus",
+    "DismissalType",
+    "Player",
+    "Team",
+    "Venue",
+    "Match",
+    "Innings",
+    "BattingPerformance",
+    "BowlingPerformance",
+    "PlayerMatchup",
+    "Auction",
+    "AuctionTransaction",
+]

@@ -3,12 +3,17 @@
  *
  * Centralised fetch wrapper that all frontend modules use to communicate
  * with the FastAPI backend.
- *
- * - Base URL is configured via NEXT_PUBLIC_API_URL environment variable.
- * - All errors are normalised into ApiError objects.
- * - Never hardcode connection status — always derive it from the actual API.
  */
-import type { ApiError, HealthResponse } from "@/types/api";
+import type {
+  ApiError,
+  HealthResponse,
+  PaginatedResponse,
+  Player,
+  Team,
+  Venue,
+  Match,
+  Auction,
+} from "@/types/api";
 
 // ── Base URL ──────────────────────────────────────────────────────────────────
 const API_BASE_URL =
@@ -74,17 +79,69 @@ async function apiFetch<T>(
   }
 }
 
-// ── API Functions ─────────────────────────────────────────────────────────────
+// ── Health API ────────────────────────────────────────────────────────────────
 
-/**
- * Fetch the backend health status.
- *
- * Returns a HealthResponse if the API is reachable, or throws ApiError.
- * The frontend health hook uses this to determine connection status.
- */
 export async function checkHealth(): Promise<HealthResponse> {
   return apiFetch<HealthResponse>("/api/v1/health");
 }
 
-// Export base URL for use in other client modules
+// ── Phase 2 Cricket Data API Functions ────────────────────────────────────────
+
+export async function getPlayers(
+  params: { page?: number; page_size?: number; name?: string; role?: string } = {}
+): Promise<PaginatedResponse<Player>> {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", params.page.toString());
+  if (params.page_size) query.set("page_size", params.page_size.toString());
+  if (params.name) query.set("name", params.name);
+  if (params.role) query.set("role", params.role);
+  const path = `/api/v1/players${query.toString() ? `?${query.toString()}` : ""}`;
+  return apiFetch<PaginatedResponse<Player>>(path);
+}
+
+export async function getTeams(
+  params: { page?: number; page_size?: number; name?: string } = {}
+): Promise<PaginatedResponse<Team>> {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", params.page.toString());
+  if (params.page_size) query.set("page_size", params.page_size.toString());
+  if (params.name) query.set("name", params.name);
+  const path = `/api/v1/teams${query.toString() ? `?${query.toString()}` : ""}`;
+  return apiFetch<PaginatedResponse<Team>>(path);
+}
+
+export async function getVenues(
+  params: { page?: number; page_size?: number; city?: string } = {}
+): Promise<PaginatedResponse<Venue>> {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", params.page.toString());
+  if (params.page_size) query.set("page_size", params.page_size.toString());
+  if (params.city) query.set("city", params.city);
+  const path = `/api/v1/venues${query.toString() ? `?${query.toString()}` : ""}`;
+  return apiFetch<PaginatedResponse<Venue>>(path);
+}
+
+export async function getMatches(
+  params: { page?: number; page_size?: number; season?: string } = {}
+): Promise<PaginatedResponse<Match>> {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", params.page.toString());
+  if (params.page_size) query.set("page_size", params.page_size.toString());
+  if (params.season) query.set("season", params.season);
+  const path = `/api/v1/matches${query.toString() ? `?${query.toString()}` : ""}`;
+  return apiFetch<PaginatedResponse<Match>>(path);
+}
+
+export async function getAuctions(
+  params: { page?: number; page_size?: number; season?: string } = {}
+): Promise<PaginatedResponse<Auction>> {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", params.page.toString());
+  if (params.page_size) query.set("page_size", params.page_size.toString());
+  if (params.season) query.set("season", params.season);
+  const path = `/api/v1/auctions${query.toString() ? `?${query.toString()}` : ""}`;
+  return apiFetch<PaginatedResponse<Auction>>(path);
+}
+
+// Export base URL
 export { API_BASE_URL };
