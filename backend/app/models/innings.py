@@ -2,7 +2,8 @@
 SuperScout Backend — Innings Model
 """
 from datetime import datetime
-from sqlalchemy import Integer, Float, DateTime, ForeignKey, UniqueConstraint, func
+from typing import Optional
+from sqlalchemy import Integer, Float, DateTime, ForeignKey, UniqueConstraint, CheckConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -21,6 +22,9 @@ class Innings(Base):
     total_runs: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     wickets: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     overs: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    run_rate: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    extras: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    powerplay_runs: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
@@ -28,6 +32,10 @@ class Innings(Base):
 
     __table_args__ = (
         UniqueConstraint("match_id", "innings_number", name="uq_match_innings_number"),
+        CheckConstraint("total_runs >= 0", name="chk_innings_total_runs_non_negative"),
+        CheckConstraint("wickets >= 0 AND wickets <= 10", name="chk_innings_wickets_valid"),
+        CheckConstraint("overs >= 0.0", name="chk_innings_overs_non_negative"),
+        CheckConstraint("extras >= 0", name="chk_innings_extras_non_negative"),
     )
 
     # Relationships

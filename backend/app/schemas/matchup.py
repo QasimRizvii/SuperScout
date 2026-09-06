@@ -17,8 +17,10 @@ class PlayerMatchupBase(BaseModel):
     dismissals: int = Field(0, ge=0)
     fours: int = Field(0, ge=0)
     sixes: int = Field(0, ge=0)
+    dot_balls: int = Field(0, ge=0)
     strike_rate: Optional[float] = Field(None, ge=0.0)
     average: Optional[float] = Field(None, ge=0.0)
+    boundary_percentage: Optional[float] = Field(None, ge=0.0)
 
 
 class PlayerMatchupCreate(PlayerMatchupBase):

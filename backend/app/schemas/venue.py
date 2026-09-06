@@ -12,6 +12,9 @@ class VenueBase(BaseModel):
     country: Optional[str] = Field(None, max_length=100)
     capacity: Optional[int] = Field(None, ge=0)
     pitch_type: Optional[str] = Field(None, max_length=100)
+    latitude: Optional[float] = Field(None, ge=-90.0, le=90.0)
+    longitude: Optional[float] = Field(None, ge=-180.0, le=180.0)
+    timezone: Optional[str] = Field(None, max_length=50)
 
 
 class VenueCreate(VenueBase):
@@ -24,6 +27,9 @@ class VenueUpdate(BaseModel):
     country: Optional[str] = Field(None, max_length=100)
     capacity: Optional[int] = Field(None, ge=0)
     pitch_type: Optional[str] = Field(None, max_length=100)
+    latitude: Optional[float] = Field(None, ge=-90.0, le=90.0)
+    longitude: Optional[float] = Field(None, ge=-180.0, le=180.0)
+    timezone: Optional[str] = Field(None, max_length=50)
 
 
 class VenueResponse(VenueBase):

@@ -16,6 +16,8 @@ class TeamService:
         page: int = 1,
         page_size: int = 20,
         name: Optional[str] = None,
+        country: Optional[str] = None,
+        team_type: Optional[str] = None,
         is_active: Optional[bool] = None,
     ) -> Tuple[List[Team], int]:
         """Fetch paginated list of teams with optional filtering."""
@@ -23,6 +25,10 @@ class TeamService:
 
         if name:
             stmt = stmt.where(Team.name.ilike(f"%{name}%"))
+        if country:
+            stmt = stmt.where(Team.country.ilike(f"%{country}%"))
+        if team_type:
+            stmt = stmt.where(Team.team_type == team_type)
         if is_active is not None:
             stmt = stmt.where(Team.is_active == is_active)
 

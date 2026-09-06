@@ -15,12 +15,15 @@ class VenueService:
         db: Session,
         page: int = 1,
         page_size: int = 20,
+        name: Optional[str] = None,
         city: Optional[str] = None,
         country: Optional[str] = None,
     ) -> Tuple[List[Venue], int]:
         """Fetch paginated list of venues with optional filtering."""
         stmt = select(Venue)
 
+        if name:
+            stmt = stmt.where(Venue.name.ilike(f"%{name}%"))
         if city:
             stmt = stmt.where(Venue.city.ilike(f"%{city}%"))
         if country:

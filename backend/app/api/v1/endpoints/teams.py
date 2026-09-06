@@ -19,6 +19,8 @@ def list_teams(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(20, ge=1, le=100, description="Items per page"),
     name: Optional[str] = Query(None, description="Filter by team name"),
+    country: Optional[str] = Query(None, description="Filter by country"),
+    team_type: Optional[str] = Query(None, description="Filter by team type (franchise, international, domestic)"),
     is_active: Optional[bool] = Query(None, description="Filter active status"),
     db: Session = Depends(get_db),
 ):
@@ -26,7 +28,13 @@ def list_teams(
     List teams with pagination and filtering.
     """
     items, total = TeamService.get_teams(
-        db, page=page, page_size=page_size, name=name, is_active=is_active
+        db,
+        page=page,
+        page_size=page_size,
+        name=name,
+        country=country,
+        team_type=team_type,
+        is_active=is_active,
     )
     total_pages = math.ceil(total / page_size) if total > 0 else 0
 

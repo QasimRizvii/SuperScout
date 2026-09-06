@@ -2,7 +2,7 @@
 SuperScout Backend — Player Service Layer
 """
 from typing import Optional, Tuple, List
-from sqlalchemy import select, func
+from sqlalchemy import select, func, or_
 from sqlalchemy.orm import Session
 
 from app.models.player import Player
@@ -16,24 +16,42 @@ class PlayerService:
         db: Session,
         page: int = 1,
         page_size: int = 20,
+        search: Optional[str] = None,
         name: Optional[str] = None,
         role: Optional[PlayerRole] = None,
+        batting_style: Optional[str] = None,
+        bowling_style: Optional[str] = None,
         nationality: Optional[str] = None,
+        is_wicketkeeper: Optional[bool] = None,
         is_active: Optional[bool] = None,
     ) -> Tuple[List[Player], int]:
         """
-        Fetch paginated list of players with optional filtering.
+        Fetch paginated list of players with optional search & filtering.
 
         Returns (items, total_count).
         """
         stmt = select(Player)
 
+        if search:
+            search_pattern = f"%{search}%"
+            stmt = stmt.where(
+                or_(
+                    Player.name.ilike(search_pattern),
+                    Player.short_name.ilike(search_pattern),
+                )
+            )
         if name:
             stmt = stmt.where(Player.name.ilike(f"%{name}%"))
         if role:
             stmt = stmt.where(Player.role == role)
+        if batting_style:
+            stmt = stmt.where(Player.batting_style.ilike(f"%{batting_style}%"))
+        if bowling_style:
+            stmt = stmt.where(Player.bowling_style.ilike(f"%{bowling_style}%"))
         if nationality:
             stmt = stmt.where(Player.nationality.ilike(f"%{nationality}%"))
+        if is_wicketkeeper is not None:
+            stmt = stmt.where(Player.is_wicketkeeper == is_wicketkeeper)
         if is_active is not None:
             stmt = stmt.where(Player.is_active == is_active)
 

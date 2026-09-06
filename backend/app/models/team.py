@@ -17,7 +17,10 @@ class Team(Base):
     short_name: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     abbreviation: Mapped[Optional[str]] = mapped_column(String(20), nullable=True, index=True)
     city: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    country: Mapped[Optional[str]] = mapped_column(String(100), nullable=True, index=True)
+    team_type: Mapped[str] = mapped_column(String(50), default="franchise", nullable=False, index=True)
+    logo_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False, index=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False

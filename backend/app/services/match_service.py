@@ -7,6 +7,7 @@ from sqlalchemy import select, func, or_
 from sqlalchemy.orm import Session
 
 from app.models.match import Match
+from app.models.enums import MatchType
 from app.schemas.match import MatchCreate
 
 
@@ -17,15 +18,23 @@ class MatchService:
         page: int = 1,
         page_size: int = 20,
         season: Optional[str] = None,
+        competition: Optional[str] = None,
+        match_type: Optional[MatchType] = None,
         team_id: Optional[int] = None,
         venue_id: Optional[int] = None,
         match_date: Optional[date] = None,
+        start_date: Optional[date] = None,
+        end_date: Optional[date] = None,
     ) -> Tuple[List[Match], int]:
         """Fetch paginated list of matches with optional filtering."""
         stmt = select(Match)
 
         if season:
             stmt = stmt.where(Match.season == season)
+        if competition:
+            stmt = stmt.where(Match.competition.ilike(f"%{competition}%"))
+        if match_type:
+            stmt = stmt.where(Match.match_type == match_type)
         if team_id:
             stmt = stmt.where(
                 or_(Match.team_1_id == team_id, Match.team_2_id == team_id)
@@ -34,6 +43,10 @@ class MatchService:
             stmt = stmt.where(Match.venue_id == venue_id)
         if match_date:
             stmt = stmt.where(Match.match_date == match_date)
+        if start_date:
+            stmt = stmt.where(Match.match_date >= start_date)
+        if end_date:
+            stmt = stmt.where(Match.match_date <= end_date)
 
         count_stmt = select(func.count()).select_from(stmt.subquery())
         total = db.scalar(count_stmt) or 0

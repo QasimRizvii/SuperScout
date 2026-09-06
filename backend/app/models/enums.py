@@ -9,8 +9,13 @@ from enum import Enum
 
 class PlayerRole(str, Enum):
     BATTER = "batter"
-    WICKETKEEPER = "wicketkeeper"
+    WICKETKEEPER_BATTER = "wicketkeeper_batter"
     ALL_ROUNDER = "all_rounder"
+    BOWLING_ALL_ROUNDER = "bowling_all_rounder"
+    FAST_BOWLER = "fast_bowler"
+    MEDIUM_FAST_BOWLER = "medium_fast_bowler"
+    SPINNER = "spinner"
+    WICKETKEEPER = "wicketkeeper"
     BOWLER = "bowler"
 
 

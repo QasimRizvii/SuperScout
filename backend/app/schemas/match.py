@@ -21,9 +21,14 @@ class BattingPerformanceBase(BaseModel):
     balls_faced: int = Field(0, ge=0)
     fours: int = Field(0, ge=0)
     sixes: int = Field(0, ge=0)
+    dot_balls: int = Field(0, ge=0)
+    runs_powerplay: Optional[int] = Field(None, ge=0)
+    runs_middle: Optional[int] = Field(None, ge=0)
+    runs_death: Optional[int] = Field(None, ge=0)
     strike_rate: Optional[float] = Field(None, ge=0.0)
     dismissal_type: Optional[str] = None
     dismissed_by_player_id: Optional[int] = None
+    fielder_player_id: Optional[int] = None
 
 
 class BattingPerformanceCreate(BattingPerformanceBase):
@@ -36,6 +41,10 @@ class BattingPerformanceResponse(BattingPerformanceBase):
     id: int
     created_at: datetime
     player: Optional[PlayerResponse] = None
+    dismissed_by: Optional[PlayerResponse] = None
+    fielder: Optional[PlayerResponse] = None
+    boundary_percentage: Optional[float] = None
+    balls_per_boundary: Optional[float] = None
 
 
 class BowlingPerformanceBase(BaseModel):
@@ -43,6 +52,7 @@ class BowlingPerformanceBase(BaseModel):
     innings_id: int
     player_id: int
     team_id: int
+    bowling_position: Optional[int] = Field(None, ge=1)
     overs: float = Field(0.0, ge=0.0)
     balls_bowled: int = Field(0, ge=0)
     maidens: int = Field(0, ge=0)
@@ -50,6 +60,10 @@ class BowlingPerformanceBase(BaseModel):
     wickets: int = Field(0, ge=0)
     wides: int = Field(0, ge=0)
     no_balls: int = Field(0, ge=0)
+    dot_balls: int = Field(0, ge=0)
+    overs_powerplay: Optional[float] = Field(None, ge=0.0)
+    overs_middle: Optional[float] = Field(None, ge=0.0)
+    overs_death: Optional[float] = Field(None, ge=0.0)
     economy: Optional[float] = Field(None, ge=0.0)
 
 
@@ -73,6 +87,9 @@ class InningsBase(BaseModel):
     total_runs: int = Field(0, ge=0)
     wickets: int = Field(0, ge=0, le=10)
     overs: float = Field(0.0, ge=0.0)
+    run_rate: Optional[float] = Field(None, ge=0.0)
+    extras: int = Field(0, ge=0)
+    powerplay_runs: Optional[int] = Field(None, ge=0)
 
 
 class InningsCreate(InningsBase):
@@ -95,10 +112,14 @@ class MatchBase(BaseModel):
     season: str = Field(..., max_length=50)
     match_date: date
     match_type: MatchType = MatchType.T20
+    competition: Optional[str] = Field(None, max_length=100)
+    status: str = Field("completed", max_length=50)
     venue_id: int
     team_1_id: int
     team_2_id: int
     winner_team_id: Optional[int] = None
+    toss_winner_id: Optional[int] = None
+    toss_decision: Optional[str] = Field(None, max_length=20)
     result_description: Optional[str] = Field(None, max_length=255)
 
 
@@ -111,10 +132,14 @@ class MatchUpdate(BaseModel):
     season: Optional[str] = None
     match_date: Optional[date] = None
     match_type: Optional[MatchType] = None
+    competition: Optional[str] = None
+    status: Optional[str] = None
     venue_id: Optional[int] = None
     team_1_id: Optional[int] = None
     team_2_id: Optional[int] = None
     winner_team_id: Optional[int] = None
+    toss_winner_id: Optional[int] = None
+    toss_decision: Optional[str] = None
     result_description: Optional[str] = None
 
 

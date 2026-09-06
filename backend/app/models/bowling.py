@@ -3,7 +3,7 @@ SuperScout Backend — Bowling Performance Model
 """
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import Integer, Float, DateTime, ForeignKey, func
+from sqlalchemy import Integer, Float, DateTime, ForeignKey, CheckConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -21,6 +21,7 @@ class BowlingPerformance(Base):
     )
     player_id: Mapped[int] = mapped_column(ForeignKey("players.id"), nullable=False, index=True)
     team_id: Mapped[int] = mapped_column(ForeignKey("teams.id"), nullable=False)
+    bowling_position: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     overs: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
     balls_bowled: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     maidens: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
@@ -28,10 +29,24 @@ class BowlingPerformance(Base):
     wickets: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     wides: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     no_balls: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    dot_balls: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    overs_powerplay: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    overs_middle: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    overs_death: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     economy: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    __table_args__ = (
+        CheckConstraint("runs_conceded >= 0", name="chk_bowling_runs_non_negative"),
+        CheckConstraint("balls_bowled >= 0", name="chk_bowling_balls_non_negative"),
+        CheckConstraint("wickets >= 0", name="chk_bowling_wickets_non_negative"),
+        CheckConstraint("maidens >= 0", name="chk_bowling_maidens_non_negative"),
+        CheckConstraint("wides >= 0", name="chk_bowling_wides_non_negative"),
+        CheckConstraint("no_balls >= 0", name="chk_bowling_no_balls_non_negative"),
+        CheckConstraint("dot_balls >= 0", name="chk_bowling_dot_balls_non_negative"),
     )
 
     # Relationships

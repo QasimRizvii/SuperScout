@@ -3,7 +3,7 @@ SuperScout Backend — Player Matchup Model
 """
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import Integer, Float, DateTime, ForeignKey, UniqueConstraint, func
+from sqlalchemy import Integer, Float, DateTime, ForeignKey, UniqueConstraint, CheckConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -21,8 +21,10 @@ class PlayerMatchup(Base):
     dismissals: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     fours: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     sixes: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    dot_balls: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     strike_rate: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     average: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    boundary_percentage: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
@@ -33,6 +35,12 @@ class PlayerMatchup(Base):
 
     __table_args__ = (
         UniqueConstraint("batter_id", "bowler_id", name="uq_batter_bowler_matchup"),
+        CheckConstraint("balls >= 0", name="chk_matchup_balls_non_negative"),
+        CheckConstraint("runs >= 0", name="chk_matchup_runs_non_negative"),
+        CheckConstraint("dismissals >= 0", name="chk_matchup_dismissals_non_negative"),
+        CheckConstraint("fours >= 0", name="chk_matchup_fours_non_negative"),
+        CheckConstraint("sixes >= 0", name="chk_matchup_sixes_non_negative"),
+        CheckConstraint("dot_balls >= 0", name="chk_matchup_dot_balls_non_negative"),
     )
 
     # Relationships

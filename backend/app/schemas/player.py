@@ -16,6 +16,8 @@ class PlayerBase(BaseModel):
     bowling_style: Optional[str] = Field(None, max_length=100)
     nationality: Optional[str] = Field(None, max_length=100)
     date_of_birth: Optional[date] = None
+    is_wicketkeeper: bool = False
+    profile_image_url: Optional[str] = Field(None, max_length=255)
     is_active: bool = True
 
 
@@ -31,6 +33,8 @@ class PlayerUpdate(BaseModel):
     bowling_style: Optional[str] = Field(None, max_length=100)
     nationality: Optional[str] = Field(None, max_length=100)
     date_of_birth: Optional[date] = None
+    is_wicketkeeper: Optional[bool] = None
+    profile_image_url: Optional[str] = Field(None, max_length=255)
     is_active: Optional[bool] = None
 
 

@@ -12,6 +12,8 @@ from app.schemas.match import MatchResponse
 from app.schemas.common import PaginatedResponse
 from app.services.match_service import MatchService
 
+from app.models.enums import MatchType
+
 router = APIRouter()
 
 
@@ -20,16 +22,30 @@ def list_matches(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(20, ge=1, le=100, description="Items per page"),
     season: Optional[str] = Query(None, description="Filter by season"),
+    competition: Optional[str] = Query(None, description="Filter by competition name"),
+    match_type: Optional[MatchType] = Query(None, alias="format", description="Filter by match format (T20, ODI, Test, T10, Other)"),
     team_id: Optional[int] = Query(None, description="Filter by team (team 1 or team 2)"),
     venue_id: Optional[int] = Query(None, description="Filter by venue ID"),
     match_date: Optional[date] = Query(None, description="Filter by match date"),
+    start_date: Optional[date] = Query(None, description="Filter start of date range"),
+    end_date: Optional[date] = Query(None, description="Filter end of date range"),
     db: Session = Depends(get_db),
 ):
     """
-    List matches with pagination and filtering.
+    List matches with pagination and filtering across format, season, competition, teams, venue, and date range.
     """
     items, total = MatchService.get_matches(
-        db, page=page, page_size=page_size, season=season, team_id=team_id, venue_id=venue_id, match_date=match_date
+        db,
+        page=page,
+        page_size=page_size,
+        season=season,
+        competition=competition,
+        match_type=match_type,
+        team_id=team_id,
+        venue_id=venue_id,
+        match_date=match_date,
+        start_date=start_date,
+        end_date=end_date,
     )
     total_pages = math.ceil(total / page_size) if total > 0 else 0
 

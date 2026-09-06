@@ -11,6 +11,9 @@ class TeamBase(BaseModel):
     short_name: Optional[str] = Field(None, max_length=100)
     abbreviation: Optional[str] = Field(None, max_length=20)
     city: Optional[str] = Field(None, max_length=100)
+    country: Optional[str] = Field(None, max_length=100)
+    team_type: str = Field("franchise", max_length=50)
+    logo_url: Optional[str] = Field(None, max_length=255)
     is_active: bool = True
 
 
@@ -23,6 +26,9 @@ class TeamUpdate(BaseModel):
     short_name: Optional[str] = Field(None, max_length=100)
     abbreviation: Optional[str] = Field(None, max_length=20)
     city: Optional[str] = Field(None, max_length=100)
+    country: Optional[str] = Field(None, max_length=100)
+    team_type: Optional[str] = Field(None, max_length=50)
+    logo_url: Optional[str] = Field(None, max_length=255)
     is_active: Optional[bool] = None
 
 

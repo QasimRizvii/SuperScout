@@ -19,17 +19,31 @@ router = APIRouter()
 def list_players(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    search: Optional[str] = Query(None, description="Case-insensitive player name/short_name search"),
     name: Optional[str] = Query(None, description="Filter by player name (partial match)"),
     role: Optional[PlayerRole] = Query(None, description="Filter by player role"),
+    batting_style: Optional[str] = Query(None, description="Filter by batting style"),
+    bowling_style: Optional[str] = Query(None, description="Filter by bowling style"),
     nationality: Optional[str] = Query(None, description="Filter by nationality"),
+    is_wicketkeeper: Optional[bool] = Query(None, description="Filter wicketkeeper status"),
     is_active: Optional[bool] = Query(None, description="Filter active status"),
     db: Session = Depends(get_db),
 ):
     """
-    List players with pagination and filtering.
+    List players with pagination, case-insensitive search, and rich filtering.
     """
     items, total = PlayerService.get_players(
-        db, page=page, page_size=page_size, name=name, role=role, nationality=nationality, is_active=is_active
+        db,
+        page=page,
+        page_size=page_size,
+        search=search,
+        name=name,
+        role=role,
+        batting_style=batting_style,
+        bowling_style=bowling_style,
+        nationality=nationality,
+        is_wicketkeeper=is_wicketkeeper,
+        is_active=is_active,
     )
     total_pages = math.ceil(total / page_size) if total > 0 else 0
 

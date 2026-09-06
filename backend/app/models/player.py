@@ -26,7 +26,9 @@ class Player(Base):
     bowling_style: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     nationality: Mapped[Optional[str]] = mapped_column(String(100), nullable=True, index=True)
     date_of_birth: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    is_wicketkeeper: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    profile_image_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False, index=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False

@@ -18,6 +18,7 @@ router = APIRouter()
 def list_venues(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    name: Optional[str] = Query(None, description="Filter by venue name"),
     city: Optional[str] = Query(None, description="Filter by city"),
     country: Optional[str] = Query(None, description="Filter by country"),
     db: Session = Depends(get_db),
@@ -26,7 +27,7 @@ def list_venues(
     List venues with pagination and filtering.
     """
     items, total = VenueService.get_venues(
-        db, page=page, page_size=page_size, city=city, country=country
+        db, page=page, page_size=page_size, name=name, city=city, country=country
     )
     total_pages = math.ceil(total / page_size) if total > 0 else 0
 
