@@ -1,0 +1,4 @@
+id,match_external_id,innings_number,player_name,team_name,bowling_position,overs,balls_bowled,maidens,runs_conceded,wickets,wides,no_balls,dot_balls,overs_powerplay,overs_middle,overs_death
+601,M2024_01,1,Karan Patel,Delhi Dragons,1,4.0,24,0,32,2,1,0,10,2.0,0.0,2.0
+602,M2024_01,1,Devendra Singh,Delhi Dragons,3,4.0,24,0,28,1,0,0,12,0.0,4.0,0.0
+603,M2024_01,2,Karan Patel,Mumbai Mavericks,1,4.0,24,0,25,3,2,0,11,2.0,0.0,2.0

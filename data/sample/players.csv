@@ -1,0 +1,6 @@
+id,name,short_name,role,batting_style,bowling_style,nationality,date_of_birth,is_wicketkeeper,is_active
+101,Aarav Sharma,A Sharma,batter,Right-hand bat,Right-arm medium,India,1992-05-14,false,true
+102,Karan Patel,K Patel,fast_bowler,Right-hand bat,Right-arm fast,India,1995-08-22,false,true
+103,Rohan Verma,R Verma,wicketkeeper_batter,Right-hand bat,None,India,1994-01-10,true,true
+104,Liam Smith,L Smith,all_rounder,Left-hand bat,Right-arm offbreak,Australia,1990-11-30,false,true
+105,Devendra Singh,D Singh,spinner,Right-hand bat,Legbreak googly,India,1997-03-05,false,true

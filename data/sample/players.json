@@ -1,0 +1,24 @@
+[
+  {
+    "id": 106,
+    "name": "David Warner",
+    "short_name": "D Warner",
+    "role": "batter",
+    "batting_style": "Left-hand bat",
+    "bowling_style": "Legbreak",
+    "nationality": "Australia",
+    "is_wicketkeeper": false,
+    "is_active": true
+  },
+  {
+    "id": 107,
+    "name": "Trent Boult",
+    "short_name": "T Boult",
+    "role": "fast_bowler",
+    "batting_style": "Right-hand bat",
+    "bowling_style": "Left-arm fast-medium",
+    "nationality": "New Zealand",
+    "is_wicketkeeper": false,
+    "is_active": true
+  }
+]

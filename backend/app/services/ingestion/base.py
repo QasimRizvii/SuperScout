@@ -9,10 +9,19 @@ Defines the standard 5-stage ingestion pipeline for all future cricket datasets:
 5. Ingest to Database
 """
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Tuple, Optional, Protocol, runtime_checkable
 from sqlalchemy.orm import Session
 
 from app.services.ingestion.schemas import IngestionReport, IngestionError
+
+
+@runtime_checkable
+class DataSource(Protocol):
+    """Protocol interface for all structured cricket data readers."""
+
+    def read_records(self) -> List[Dict[str, Any]]:
+        """Read structured records as list of dictionaries."""
+        ...
 
 
 class BaseIngestor(ABC):

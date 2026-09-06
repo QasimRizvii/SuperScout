@@ -1,0 +1,5 @@
+id,name,short_name,abbreviation,city,country,team_type,is_active
+1,Mumbai Mavericks,Mavericks,MM,Mumbai,India,franchise,true
+2,Delhi Dragons,Dragons,DD,Delhi,India,franchise,true
+3,Chennai Champions,Champions,CC,Chennai,India,franchise,true
+4,Royal Challengers,Rays,RC,Bangalore,India,franchise,true

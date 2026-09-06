@@ -1,0 +1,4 @@
+id,match_external_id,innings_number,player_name,team_name,batting_position,runs,balls_faced,fours,sixes,dot_balls,runs_powerplay,runs_middle,runs_death,dismissal_type,bowler_name,fielder_name
+501,M2024_01,1,Aarav Sharma,Mumbai Mavericks,1,68,42,7,3,12,24,30,14,caught,Karan Patel,Rohan Verma
+502,M2024_01,1,Liam Smith,Mumbai Mavericks,3,45,28,4,2,8,0,32,13,not_out,,
+503,M2024_01,2,Rohan Verma,Delhi Dragons,2,54,36,5,2,10,20,24,10,bowled,Karan Patel,
