@@ -23,6 +23,7 @@ from app.models.bowling import BowlingPerformance
 from app.models.matchup import PlayerMatchup
 from app.models.auction import Auction, AuctionTransaction
 from app.models.scouting import ScoutingWatchlist, ScoutingNote
+from app.models.provenance import DataProvenanceLog
 
 __all__ = [
     "PlayerRole",
@@ -45,5 +46,6 @@ __all__ = [
     "AuctionTransaction",
     "ScoutingWatchlist",
     "ScoutingNote",
+    "DataProvenanceLog",
 ]
 
