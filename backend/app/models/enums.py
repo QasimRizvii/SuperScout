@@ -50,3 +50,33 @@ class DismissalType(str, Enum):
     RETIRED = "retired"
     NOT_OUT = "not_out"
     OTHER = "other"
+
+
+class WatchlistStatus(str, Enum):
+    NEW = "NEW"
+    WATCHING = "WATCHING"
+    SHORTLISTED = "SHORTLISTED"
+    PRIORITY = "PRIORITY"
+    CONTACTED = "CONTACTED"
+    ACQUIRED = "ACQUIRED"
+    REJECTED = "REJECTED"
+
+
+class WatchlistPriority(str, Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+class ScoutingNoteCategory(str, Enum):
+    BATTING = "BATTING"
+    BOWLING = "BOWLING"
+    FIELDING = "FIELDING"
+    FITNESS = "FITNESS"
+    TACTICAL = "TACTICAL"
+    MENTAL = "MENTAL"
+    ROLE = "ROLE"
+    AUCTION = "AUCTION"
+    GENERAL = "GENERAL"
+

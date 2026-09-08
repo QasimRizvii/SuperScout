@@ -9,6 +9,9 @@ from app.models.enums import (
     AuctionType,
     AuctionStatus,
     DismissalType,
+    WatchlistStatus,
+    WatchlistPriority,
+    ScoutingNoteCategory,
 )
 from app.models.player import Player
 from app.models.team import Team
@@ -19,6 +22,7 @@ from app.models.batting import BattingPerformance
 from app.models.bowling import BowlingPerformance
 from app.models.matchup import PlayerMatchup
 from app.models.auction import Auction, AuctionTransaction
+from app.models.scouting import ScoutingWatchlist, ScoutingNote
 
 __all__ = [
     "PlayerRole",
@@ -26,6 +30,9 @@ __all__ = [
     "AuctionType",
     "AuctionStatus",
     "DismissalType",
+    "WatchlistStatus",
+    "WatchlistPriority",
+    "ScoutingNoteCategory",
     "Player",
     "Team",
     "Venue",
@@ -36,4 +43,7 @@ __all__ = [
     "PlayerMatchup",
     "Auction",
     "AuctionTransaction",
+    "ScoutingWatchlist",
+    "ScoutingNote",
 ]
+
