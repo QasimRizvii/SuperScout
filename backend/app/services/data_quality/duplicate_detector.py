@@ -20,7 +20,7 @@ from app.services.data_quality.schemas import (
 )
 
 
-def normalize_string(val: str) -> str:
+def normalize_string(val: Optional[str]) -> str:
     """Normalize string for fuzzy comparison (lowercase, strip punctuation, strip extra whitespace)."""
     if not val:
         return ""
@@ -30,7 +30,7 @@ def normalize_string(val: str) -> str:
     return val
 
 
-def compute_string_similarity(str1: str, str2: str) -> float:
+def compute_string_similarity(str1: Optional[str], str2: Optional[str]) -> float:
     """Simple Levenshtein / Token similarity score between two normalized strings (0.0 to 100.0)."""
     n1 = normalize_string(str1)
     n2 = normalize_string(str2)
@@ -99,17 +99,17 @@ class DuplicateDetector:
                 if sim >= 80.0:
                     factors.append(f"Name similarity ({sim:.1f}%)")
 
-                p1_country = getattr(p1, "country", getattr(p1, "nationality", None))
-                p2_country = getattr(p2, "country", getattr(p2, "nationality", None))
+                p1_country = p1.nationality
+                p2_country = p2.nationality
 
-                if p1_country and p2_country and str(p1_country).lower() == str(p2_country).lower():
-                    factors.append(f"Matching nationality/country ({p1_country})")
+                if p1_country and p2_country and p1_country.lower() == p2_country.lower():
+                    factors.append(f"Matching nationality ({p1_country})")
                     sim += 10.0
-                elif p1_country and p2_country and str(p1_country).lower() != str(p2_country).lower():
+                elif p1_country and p2_country and p1_country.lower() != p2_country.lower():
                     sim -= 15.0
 
-                p1_dob = getattr(p1, "dob", getattr(p1, "date_of_birth", None))
-                p2_dob = getattr(p2, "dob", getattr(p2, "date_of_birth", None))
+                p1_dob = p1.date_of_birth
+                p2_dob = p2.date_of_birth
 
                 if p1_dob and p2_dob and p1_dob == p2_dob:
                     factors.append(f"Exact date of birth match ({p1_dob})")
@@ -201,13 +201,13 @@ class DuplicateDetector:
                 m2 = matches[j]
                 total_checked += 1
 
-                m1_date = getattr(m1, "date", getattr(m1, "match_date", None))
-                m2_date = getattr(m2, "date", getattr(m2, "match_date", None))
+                m1_date = m1.match_date
+                m2_date = m2.match_date
 
                 if m1_date and m2_date and m1_date == m2_date:
                     same_teams = (
-                        (m1.team1_id == m2.team1_id and m1.team2_id == m2.team2_id) or
-                        (m1.team1_id == m2.team2_id and m1.team2_id == m2.team1_id)
+                        (m1.team_1_id == m2.team_1_id and m1.team_2_id == m2.team_2_id) or
+                        (m1.team_1_id == m2.team_2_id and m1.team_2_id == m2.team_1_id)
                     )
                     if same_teams:
                         pairs.append(

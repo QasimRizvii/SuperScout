@@ -206,8 +206,8 @@ class ConsistencyEngine:
         # 3. Scan Matches
         matches = list(self.db.scalars(select(Match)).all())
         for m in matches:
-            t1 = getattr(m, "team_1_id", getattr(m, "team1_id", None))
-            t2 = getattr(m, "team_2_id", getattr(m, "team2_id", None))
+            t1 = m.team_1_id
+            t2 = m.team_2_id
             if t1 and t2 and t1 == t2:
                 issues.append(
                     InconsistencyIssue(

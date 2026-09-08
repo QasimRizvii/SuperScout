@@ -39,17 +39,23 @@ class CompletenessChecker:
                     missing_fields=["Player record not found"]
                 )
             
-            fields = ["name", "country", "primary_role", "batting_style", "bowling_style", "dob"]
             missing = []
+            field_checks = [
+                ("name", player.name),
+                ("nationality", player.nationality),
+                ("role", player.role),
+                ("batting_style", player.batting_style),
+                ("bowling_style", player.bowling_style),
+                ("date_of_birth", player.date_of_birth),
+            ]
             present_count = 0
-            for f in fields:
-                val = getattr(player, f, None)
+            for name, val in field_checks:
                 if val is not None and str(val).strip() != "":
                     present_count += 1
                 else:
-                    missing.append(f)
+                    missing.append(name)
 
-            pct = (present_count / len(fields)) * 100.0
+            pct = (present_count / len(field_checks)) * 100.0
             return CompletenessReport(
                 entity_name="Player",
                 total_records=1,
@@ -68,16 +74,23 @@ class CompletenessChecker:
                     completeness_percentage=100.0,
                     missing_fields=[]
                 )
-            fields = ["name", "country", "primary_role", "batting_style", "bowling_style", "dob"]
+            
             complete_count = 0
             missing_set = set()
             for p in players:
                 is_complete = True
-                for f in fields:
-                    val = getattr(p, f, None)
+                field_checks = [
+                    ("name", p.name),
+                    ("nationality", p.nationality),
+                    ("role", p.role),
+                    ("batting_style", p.batting_style),
+                    ("bowling_style", p.bowling_style),
+                    ("date_of_birth", p.date_of_birth),
+                ]
+                for name, val in field_checks:
                     if val is None or str(val).strip() == "":
                         is_complete = False
-                        missing_set.add(f)
+                        missing_set.add(name)
                 if is_complete:
                     complete_count += 1
             pct = (complete_count / total) * 100.0
@@ -100,16 +113,23 @@ class CompletenessChecker:
                 completeness_percentage=100.0,
                 missing_fields=[]
             )
-        fields = ["date", "venue", "format", "season"]
+        
         complete_count = 0
         missing_set = set()
         for m in matches:
             is_complete = True
-            for f in fields:
-                val = getattr(m, f, None)
+            field_checks = [
+                ("match_date", m.match_date),
+                ("venue_id", m.venue_id),
+                ("match_type", m.match_type),
+                ("season", m.season),
+                ("team_1_id", m.team_1_id),
+                ("team_2_id", m.team_2_id),
+            ]
+            for name, val in field_checks:
                 if val is None or str(val).strip() == "":
                     is_complete = False
-                    missing_set.add(f)
+                    missing_set.add(name)
             if is_complete:
                 complete_count += 1
         pct = (complete_count / total) * 100.0
@@ -132,16 +152,21 @@ class CompletenessChecker:
                 completeness_percentage=100.0,
                 missing_fields=[]
             )
-        fields = ["player_id", "match_id", "runs", "balls_faced"]
+        
         complete_count = 0
         missing_set = set()
         for p in perfs:
             is_complete = True
-            for f in fields:
-                val = getattr(p, f, None)
+            field_checks = [
+                ("player_id", p.player_id),
+                ("match_id", p.match_id),
+                ("runs", p.runs),
+                ("balls_faced", p.balls_faced),
+            ]
+            for name, val in field_checks:
                 if val is None:
                     is_complete = False
-                    missing_set.add(f)
+                    missing_set.add(name)
             if is_complete:
                 complete_count += 1
         pct = (complete_count / total) * 100.0
